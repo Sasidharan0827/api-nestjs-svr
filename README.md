@@ -71,3 +71,29 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+
+# 
+
+step 1: installed nvm 
+step 2: install node version by using nvm 
+step 3: install nestjs cli globally  
+step 4: create new nestjs project 
+step 5: install desktop docker 
+step 6: created docker compose file for mysqldb and phpadmin ui 
+step 7: how to start docker 
+          docker compose up -d 
+step 8: how to stop docker 
+          docker compose down 
+          
+
+
+# api server url 
+http://localhost:3000
+
+# mysql db url 
+http://localhost:3001
+
+# phpadmin ui for mysqldb 
+http://localhost:3002
