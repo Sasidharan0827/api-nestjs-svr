@@ -1,6 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -22,7 +21,12 @@ export class UsersService {
     });
   }
 
+  async findByEmailId(emailId:string) {
+    return await this.usersRepository.findOne({where: {emailId} })
+  }
+
   async findAll() {
+   
     return await this.usersRepository.find();
   }
 
