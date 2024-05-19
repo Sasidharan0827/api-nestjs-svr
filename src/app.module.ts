@@ -5,6 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { AdminUsersModule } from './admin-users/admin-users.module';
+import { DoctorsModule } from './doctors/doctors.module';
+import { ConsultationsModule } from './consultations/consultations.module';
+import { AdminUser } from './admin-users/entities/admin-user.entity';
+import { Doctor } from './doctors/entities/doctor.entity';
+import { Consultation } from './consultations/entities/consultation.entity';
 
 
 
@@ -16,12 +22,15 @@ import { AuthModule } from './auth/auth.module';
     username:'admin',
     password:'admin123', 
     database:'xdb',
-    entities: [User],
+    entities: [User,AdminUser, Doctor, Consultation],
     synchronize:true,
     logging: true,    
   }), 
   AuthModule,
   UsersModule,
+  AdminUsersModule,
+  DoctorsModule,
+  ConsultationsModule,
  
 ],
 controllers:[AppController],
