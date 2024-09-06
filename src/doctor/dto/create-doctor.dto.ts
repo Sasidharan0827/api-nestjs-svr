@@ -26,7 +26,9 @@ docpassword?:string;
 @IsString()
 phonenumber?:string;
 
+@IsOptional()
+@IsString()
 
-
+photo?: string;
 }
   

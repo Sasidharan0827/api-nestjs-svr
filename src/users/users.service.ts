@@ -15,7 +15,7 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
     'This action adds a new user' + JSON.stringify(createUserDto);
     return await this.usersRepository.save({
-       user_name: createUserDto.user_name,
+       name: createUserDto.name,
       dob:createUserDto.dob,
       address:createUserDto.address,
       emailId: createUserDto.emailId,
@@ -65,7 +65,7 @@ export class UsersService {
 
     let data:any = {};
 
-    if(updateUserDto.user_name) data.user_name = updateUserDto.user_name;
+    if(updateUserDto.name) data.user_name = updateUserDto.name;
 
     if(updateUserDto.emailId) data.emailId = updateUserDto.emailId;
     

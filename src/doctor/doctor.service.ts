@@ -32,28 +32,12 @@ export class DoctorService {
      education:CreateDoctorDto.education,
      specalist:CreateDoctorDto.specalist,
      phonenumber:CreateDoctorDto.phonenumber,
+     photo: CreateDoctorDto.photo,
      });
 
+     console.log('Doctor to be saved:', doctor);
     return await this.docRepository.save(doctor);
   }
-  // async create(createDoctorDto: CreateDoctorDto): Promise<Doctor> {
-  //   const { docpassword, ...rest } = createDoctorDto;
-
-  //   // Ensure the password is not undefined
-  //   if (!docpassword) {
-  //     throw new Error('Password is required');
-  //   }
-
-  //   // Hash the password
-  //   const hashedPassword = await argon2.hash(docpassword);
-
-  //   const doctor = this.docRepository.create({
-  //     ...rest,
-  //     docpassword: hashedPassword,
-  //   });
-
-  //   return this.docRepository.save(doctor);
-  // }
 
 
  

@@ -1,7 +1,7 @@
 
 
 export class SignUpDto {
-    user_name?:string;
+    name?:string;
     emailId?:string;
     dob?:string;
     address?:string;

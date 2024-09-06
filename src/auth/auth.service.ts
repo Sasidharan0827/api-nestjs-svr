@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { response } from 'express';
 import { PassThrough } from 'stream';
 import { Response } from '@nestjs/common';
+import { json } from 'body-parser';
 
 
 @Injectable()
@@ -46,7 +47,7 @@ export class AuthService {
     console.log('password into hash =>', hash);
 
     const newUser = await this.userService.create({
-      user_name: signUpDto.user_name,
+      name: signUpDto.name,
       emailId: signUpDto.emailId,
       password: hash,
       phone:signUpDto.phone,
@@ -72,13 +73,22 @@ export class AuthService {
 
     if(result == false) {
       throw new HttpException('incorrect password', 400)
+      
+
     }
 
 
     const jwtToken = await this.jwtService.signAsync({ id: row.id });
     
 
-    return { access_token: jwtToken };
+    return { access_token: jwtToken, user: {
+      id: row.id,
+      user_name: row.name,
+      emailId: row.emailId,
+      phone: row.phone,
+      dob: row.dob,
+      address: row.address
+    } };
   }
 
 

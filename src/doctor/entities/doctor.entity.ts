@@ -38,7 +38,8 @@ specalist:string;
  consultations: Consultation[]
 
 
-
+ @Column({ nullable: true })
+  photo?: string;
  
 
 }

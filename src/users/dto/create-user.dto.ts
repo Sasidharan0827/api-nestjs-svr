@@ -1,5 +1,5 @@
 export class CreateUserDto {
-   user_name?:string;
+   name?:string;
   dob?:string;
   address?:string;
 
