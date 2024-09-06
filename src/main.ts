@@ -8,6 +8,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+<<<<<<< HEAD
   // const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // app.enableCors({origin: 'http://localhost:4200',})
@@ -29,6 +30,11 @@ SwaggerModule.setup('api', app, document);
 
 
   // Start the application
+=======
+  // app.use(bodyParser.json())
+
+  app.enableCors({origin:'http://localhost:4200'})
+>>>>>>> 29c5f3bd09b6c52f26e131f40f765c956beade2b
   await app.listen(3000);
 }
 bootstrap();

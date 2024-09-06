@@ -1,6 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+<<<<<<< HEAD
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto} from './dto/update-user.dto';
+=======
+import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+>>>>>>> 29c5f3bd09b6c52f26e131f40f765c956beade2b
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Like, Repository } from 'typeorm';
@@ -27,6 +31,14 @@ export class UsersService {
 
   async findByEmailId(emailId:string) {
     return await this.usersRepository.findOne({where: {emailId} })
+<<<<<<< HEAD
+=======
+  }
+
+  async findAll() {
+   
+    return await this.usersRepository.find();
+>>>>>>> 29c5f3bd09b6c52f26e131f40f765c956beade2b
   }
 
   async findAll(UserEmailSearch:string,UserNameSearch:string,UsearchPhoneSearch:string): Promise<User[]> {
