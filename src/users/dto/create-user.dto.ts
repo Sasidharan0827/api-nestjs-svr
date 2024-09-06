@@ -1,6 +1,10 @@
 export class CreateUserDto {
-    userName?:string;
+   user_name?:string;
+  dob?:string;
+  address?:string;
+
     emailId?:string;
     password?:string;
-    profile?:number;
+    phone?:string;
+   
 }
