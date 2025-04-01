@@ -32,7 +32,7 @@ export class DoctorService {
      education:CreateDoctorDto.education,
      specalist:CreateDoctorDto.specalist,
      phonenumber:CreateDoctorDto.phonenumber,
-     photo: CreateDoctorDto.photo,
+     
      });
 
      console.log('Doctor to be saved:', doctor);
@@ -73,22 +73,22 @@ export class DoctorService {
     return query.getMany();
    
   }
-  async findOne(doc_id: number): Promise<Doctor> {
-    const doctor = await this.docRepository.findOne({
-      where: { doc_id },
-      relations: ['consultations'],
-    });
-    if (!doctor) {
-      throw new NotFoundException(`Doctor with ID ${doc_id} not found`);
-    }
-    return doctor;
-  }
-
-
-  // findOne(doc_id: number) {
-  //   return this.docRepository.findOne({   where: { doc_id },
-  //     relations: ['consultations'], });
+  // async findOne(doc_id: number): Promise<Doctor> {
+  //   const doctor = await this.docRepository.findOne({
+  //     where: { doc_id },
+  //     relations: ['consultations'],
+  //   });
+  //   if (!doctor) {
+  //     throw new NotFoundException(`Doctor with ID ${doc_id} not found`);
+  //   }
+  //   return doctor;
   // }
+
+
+  findOne(doc_id: number) {
+    return this.docRepository.findOne({   where: { doc_id },
+      relations: ['consultations'], });
+  }
  
 
   async update(doc_id: number, updateDoctorDto: UpdateDoctorDto) {

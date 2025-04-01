@@ -1,22 +1,17 @@
-<<<<<<< HEAD
-import { HttpException, HttpStatus, Injectable, Res, UnauthorizedException } from '@nestjs/common';
-import {  AdminSignInDto, SignInDto, SignUpDto } from './dto/auth.dto';
-=======
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { SignInDto, SignUpDto } from './dto/auth.dto';
->>>>>>> 29c5f3bd09b6c52f26e131f40f765c956beade2b
+
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as argon2 from 'argon2';
 import { UsersService } from 'src/users/users.service';
-<<<<<<< HEAD
+
 import { AdminService } from 'src/admin/admin.service';
 import { JwtService } from '@nestjs/jwt';
 import { response } from 'express';
 import { PassThrough } from 'stream';
-import { Response } from '@nestjs/common';
+import { HttpException, Injectable, Response, UnauthorizedException } from '@nestjs/common';
 import { json } from 'body-parser';
+import { AdminSignInDto, SignInDto, SignUpDto } from './dto/auth.dto';
 
 
 @Injectable()
@@ -36,21 +31,15 @@ export class AuthService {
       throw new UnauthorizedException('Invalid token');
     }}
   
-=======
 
-@Injectable()
-export class AuthService {
-  constructor(private userService: UsersService) {}
-
->>>>>>> 29c5f3bd09b6c52f26e131f40f765c956beade2b
   async signUp(signUpDto: SignUpDto) {
 
-    let row = await this.userService.findByEmailId(signUpDto.emailId);
+    // let row = await this.userService.findByEmailId(signUpDto.emailId);
 
-    console.log('row ', row)
-    if(row){
-      throw new HttpException('The emailId is already exist', 400)
-    }
+    // console.log('row ', row)
+    // if(row){
+    //   throw new HttpException('The emailId is already exist', 400)
+    // }
 
     let password: string = signUpDto.password;
     console.log('password  =>', password);
@@ -59,7 +48,7 @@ export class AuthService {
     console.log('password  =>', password);
     console.log('password into hash =>', hash);
 
-<<<<<<< HEAD
+
     const newUser = await this.userService.create({
       name: signUpDto.name,
       emailId: signUpDto.emailId,
@@ -75,22 +64,9 @@ export class AuthService {
     };
   }
 
-  async signIn(signInDto: SignInDto ) {
-=======
-    this.userService.create({
-      userName: signUpDto.userName,
-      emailId: signUpDto.emailId,
-      password: hash,
-      profile: signUpDto.profile,
-    });
-
-    let data = await this.userService.findByEmailId(signUpDto.emailId);
-
-    return {id:data.id, name:data.name, emailId:data.emailId, profile:data.profile};
-  }
 
   async signIn(signInDto: SignInDto) {
->>>>>>> 29c5f3bd09b6c52f26e131f40f765c956beade2b
+
 
     let row = await this.userService.findByEmailId(signInDto.emailId);
 
@@ -102,7 +78,7 @@ export class AuthService {
 
     if(result == false) {
       throw new HttpException('incorrect password', 400)
-<<<<<<< HEAD
+
       
 
     }
@@ -147,15 +123,3 @@ export class AuthService {
   }
   
  
-=======
-    }
-
-
-    // jwt token need to generate 
-
-    
-
-    return 'password is valid';
-  }
-}
->>>>>>> 29c5f3bd09b6c52f26e131f40f765c956beade2b

@@ -1,13 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-<<<<<<< HEAD
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto} from './dto/update-user.dto';
-=======
-import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
->>>>>>> 29c5f3bd09b6c52f26e131f40f765c956beade2b
+
+
+
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Like, Repository } from 'typeorm';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -25,21 +24,17 @@ export class UsersService {
       emailId: createUserDto.emailId,
       password: createUserDto.password,
       phone: createUserDto.phone,
+      
      
     });
   }
 
   async findByEmailId(emailId:string) {
     return await this.usersRepository.findOne({where: {emailId} })
-<<<<<<< HEAD
-=======
+
   }
 
-  async findAll() {
-   
-    return await this.usersRepository.find();
->>>>>>> 29c5f3bd09b6c52f26e131f40f765c956beade2b
-  }
+ 
 
   async findAll(UserEmailSearch:string,UserNameSearch:string,UsearchPhoneSearch:string): Promise<User[]> {
     if (UserEmailSearch && UserEmailSearch.length > 0) {
@@ -69,15 +64,13 @@ export class UsersService {
     }
     return await this.usersRepository.find();
   }
-  findOne(id: number) {
-    return this.usersRepository.findOneBy({ id });
-  }
+ 
 
   async update(id: number, updateUserDto: UpdateUserDto) {
 
     let data:any = {};
 
-    if(updateUserDto.name) data.user_name = updateUserDto.name;
+    if(updateUserDto.name) data.name = updateUserDto.name;
 
     if(updateUserDto.emailId) data.emailId = updateUserDto.emailId;
     
@@ -93,6 +86,9 @@ export class UsersService {
     let result = await this.usersRepository.update(id, data);
 
     return this.findOne(id)
+  }
+  findOne(id: number) {
+    return this.usersRepository.findOne({where: {id}});
   }
 
   remove(id: number) {

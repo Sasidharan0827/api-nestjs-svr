@@ -132,24 +132,24 @@ console.log("update api",JSON.stringify(updatedConsultationDto))
     return await this.consRepository.find({ where: { doctor: { doc_id } }, relations: ['doctor'] });
   }
 
-// async updateConsultation(doc_id: number, updateConsultationDto: UpdateConsultationDto) {
-//   const { day, session, start_time, end_time, doc_id: new_doc_id } = updateConsultationDto;
+async updateConsultationn(doc_id: number, updateConsultationDto: UpdateConsultationDto) {
+  const { day, session, start_time, end_time, doc_id: new_doc_id } = updateConsultationDto;
 
-//   const consultation = await this.consRepository.findOne({ where: { doc_id } });
+  const consultation = await this.consRepository.findOne({ where: { doc_id } });
 
-//   if (!consultation) {
-//     throw new NotFoundException(`Consultation with doc_id ${doc_id} not found.`);
-//   }
+  if (!consultation) {
+    throw new NotFoundException(`Consultation with doc_id ${doc_id} not found.`);
+  }
 
-//   if (day) consultation.day = day;
-//   if (session) consultation.session = session;
-//   if (start_time) consultation.start_time = start_time;
-//   if (end_time) consultation.end_time = end_time;
-//   if (new_doc_id) consultation.doc_id = new_doc_id;
+  if (day) consultation.day = day;
+  if (session) consultation.session = session;
+  if (start_time) consultation.start_time = start_time;
+  if (end_time) consultation.end_time = end_time;
+  if (new_doc_id) consultation.doc_id = new_doc_id;
 
-//   const updatedConsultation = await this.consRepository.save(consultation);
-//   return updatedConsultation;
-// }
+  const updatedConsultation = await this.consRepository.save(consultation);
+  return updatedConsultation;
+}
 
 // async batchUpdate(updateConsultationDtos: UpdatedConsultationDto[]): Promise<Consultation[]> {
 //   const updatedConsultations = [];

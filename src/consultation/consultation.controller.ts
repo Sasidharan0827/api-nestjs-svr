@@ -51,11 +51,11 @@ export class ConsultationController {
   findByDoctor(@Param('doc_id') doctorId: string) {
     return this.consultationService.findByDoctor(+doctorId);
   }
-// @Public()
-// @Patch('doctor/:doc_id')
-// updateConsultation(@Param('doc_id') doc_id: string, @Body() updateConsultationDto: UpdateConsultationDto) {
-//   return this.consultationService.updateConsultation(+doc_id, updateConsultationDto);
-// }
+@Public()
+@Patch('doctor/:doc_id')
+updateConsultation(@Param('doc_id') doc_id: string, @Body() updateConsultationDto: UpdateConsultationDto) {
+  return this.consultationService.updateConsultationn(+doc_id, updateConsultationDto);
+}
 // @Public()
 // @Patch('batch-update')
 // async batchUpdate(@Body() updateConsultationDtos: UpdatedConsultationDto[]): Promise<Consultation[]> {

@@ -7,8 +7,9 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-<<<<<<< HEAD
+  // const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
   // const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // app.enableCors({origin: 'http://localhost:4200',})
@@ -17,7 +18,30 @@ async function bootstrap() {
 
   app.enableCors({ origin: 'http://localhost:4200' });
   // app.useStaticAssets(join(__dirname, '..', 'uploads'));
+    // Serve static files from the 'uploads' directory
+    app.useStaticAssets(join(process.cwd(), 'uploads'), {
+      prefix: '/uploads/', // This allows accessing images via '/uploads/<filename>'
+    });
 
+
+    app.useGlobalGuards(new (class {
+      canActivate(context) {
+        const request = context.switchToHttp().getRequest();
+        const url = request.url;
+        
+        // Allow public access to static files served from the '/uploads/' path
+        if (url.startsWith('/uploads/')|| url.startsWith('/upload-images/')) {
+          return true; // Skip authentication for static files
+        }
+  
+        // Authentication check for other routes (replace with actual logic)
+        // e.g., JWT, Session authentication, etc.
+        return true;
+      }
+    })());
+
+
+    
   // Setup Swagger
    const config = new DocumentBuilder()
   .setTitle('Care Connect')
@@ -30,11 +54,7 @@ SwaggerModule.setup('api', app, document);
 
 
   // Start the application
-=======
-  // app.use(bodyParser.json())
 
-  app.enableCors({origin:'http://localhost:4200'})
->>>>>>> 29c5f3bd09b6c52f26e131f40f765c956beade2b
   await app.listen(3000);
 }
 bootstrap();
