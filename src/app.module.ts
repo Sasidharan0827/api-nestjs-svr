@@ -1,4 +1,4 @@
-import { Module} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -21,34 +21,35 @@ import { AdminModule } from './admin/admin.module';
 import { Admin } from './admin/entities/admin.entity';
 import { UploadImagesModule } from './upload-images/upload-images.module';
 
-
-
-
-
-
-
-
 @Module({
-  imports:[TypeOrmModule.forRoot({  
-    type: 'mysql',
-    host:'localhost',
-    port:3001,
-    username:'admin',
-    password:'admin123', 
-    database:'xdb',
-    entities: [User,Doctor,Appoinment,Consultation,Admin],
-    synchronize:true,
-    logging: true,    
-  }), UsersModule,AuthModule,JwtModule.register({secret:'secret'},), DoctorModule, AppoinmentModule, ConsultationModule, AdminModule, UploadImagesModule
-
- 
-],
-controllers:[AppController],
-providers:[AppService,
-  {
-    provide: APP_GUARD,
-    useClass: AuthGuard,
-  },]
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3005,
+      username: 'admin',
+      password: 'admin123',
+      database: 'blog',
+      entities: [User, Doctor, Appoinment, Consultation, Admin],
+      synchronize: true,
+      logging: true,
+    }),
+    UsersModule,
+    AuthModule,
+    JwtModule.register({ secret: 'secret' }),
+    DoctorModule,
+    AppoinmentModule,
+    ConsultationModule,
+    AdminModule,
+    UploadImagesModule,
+  ],
+  controllers: [AppController],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
-  
 export class AppModule {}
