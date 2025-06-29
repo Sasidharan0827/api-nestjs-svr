@@ -25,7 +25,7 @@ import { UploadImagesModule } from './upload-images/upload-images.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'mysql-db',
+      host: 'localhost',
       port: 3005,
       username: 'admin',
       password: 'admin123',
