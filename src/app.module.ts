@@ -25,11 +25,11 @@ import { UploadImagesModule } from './upload-images/upload-images.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3005,
-      username: 'admin',
-      password: 'admin123',
-      database: 'blog',
+      host: process.env.DB_HOST || 'localhost',
+      port: parseInt(process.env.DB_PORT || '3306'),
+      username: process.env.DB_USER || 'admin',
+      password: process.env.DB_PASSWORD || 'admin123',
+      database: process.env.DB_NAME || 'blog',
       entities: [User, Doctor, Appoinment, Consultation, Admin],
       synchronize: true,
       logging: true,
