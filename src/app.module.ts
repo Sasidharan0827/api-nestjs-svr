@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -23,8 +23,13 @@ import { UploadImagesModule } from './upload-images/upload-images.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
+const databaseConfigLogger = new Logger('DatabaseConfig');
+
 function buildDatabaseConfig(configService: ConfigService): TypeOrmModuleOptions {
-  const databaseUrl = configService.get<string>('DATABASE_URL');
+  const databaseUrl =
+    configService.get<string>('DATABASE_INTERNAL_URL') ??
+    configService.get<string>('DATABASE_URL') ??
+    configService.get<string>('DATABASE_PUBLIC_URL');
   const explicitSslMode =
     configService.get<string>('DB_SSL') ??
     configService.get<string>('DATABASE_SSL') ??
@@ -60,6 +65,18 @@ function buildDatabaseConfig(configService: ConfigService): TypeOrmModuleOptions
       );
     }
 
+    databaseConfigLogger.log(
+      `Using postgres connection URL from ${
+        configService.get<string>('DATABASE_INTERNAL_URL')
+          ? 'DATABASE_INTERNAL_URL'
+          : configService.get<string>('DATABASE_URL')
+            ? 'DATABASE_URL'
+            : 'DATABASE_PUBLIC_URL'
+      } (${parsedUrl.hostname}:${parsedUrl.port || '5432'} / ${
+        parsedUrl.pathname.slice(1) || 'postgres'
+      })`,
+    );
+
     return {
       ...baseConfig,
       url: databaseUrl,
@@ -67,19 +84,34 @@ function buildDatabaseConfig(configService: ConfigService): TypeOrmModuleOptions
     };
   }
 
-  const host = configService.get<string>('DB_HOST');
-  const port = Number(configService.get<string>('DB_PORT') ?? '5432');
+  const host =
+    configService.get<string>('DB_HOST') ??
+    configService.get<string>('PGHOST');
+  const port = Number(
+    configService.get<string>('DB_PORT') ??
+      configService.get<string>('PGPORT') ??
+      '5432',
+  );
   const username =
     configService.get<string>('DB_USERNAME') ??
-    configService.get<string>('DB_USER');
-  const password = configService.get<string>('DB_PASSWORD');
-  const database = configService.get<string>('DB_NAME');
+    configService.get<string>('DB_USER') ??
+    configService.get<string>('PGUSER');
+  const password =
+    configService.get<string>('DB_PASSWORD') ??
+    configService.get<string>('PGPASSWORD');
+  const database =
+    configService.get<string>('DB_NAME') ??
+    configService.get<string>('PGDATABASE');
 
   if (!host || !username || typeof password !== 'string' || !database) {
     throw new Error(
-      'Database configuration is incomplete. Set DATABASE_URL with a password, or provide DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, and DB_NAME.',
+      'Database configuration is incomplete. Set DATABASE_INTERNAL_URL or DATABASE_URL with a password, or provide DB_HOST/PGHOST, DB_PORT/PGPORT, DB_USERNAME/PGUSER, DB_PASSWORD/PGPASSWORD, and DB_NAME/PGDATABASE.',
     );
   }
+
+  databaseConfigLogger.log(
+    `Using postgres connection fields (${host}:${port} / ${database})`,
+  );
 
   return {
     ...baseConfig,
