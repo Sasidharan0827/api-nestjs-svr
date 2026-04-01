@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as bodyParser from 'body-parser';
+// import * as bodyParser from 'body-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -18,8 +18,8 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:4200', // Local Angular
-      'https://api.care-connect.com', // Main App
-      'https://care-connect-admin.com', // Admin Panel
+      'https://care-connect-rouge.vercel.app/', // Main App
+      'https://careconnect-virid.vercel.app/', // Admin Panel
     ],
     credentials: true, // if using cookies or authorization headers
   });
