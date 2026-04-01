@@ -16,11 +16,7 @@ async function bootstrap() {
   // await app.listen(3000);
 
   app.enableCors({
-    origin: [
-      'http://localhost:4200', // Local Angular
-      'https://care-connect-rouge.vercel.app/', // Main App
-      'https://careconnect-virid.vercel.app/', // Admin Panel
-    ],
+    origin: true, // allow all origins (quick fix)
     credentials: true, // if using cookies or authorization headers
   });
   // app.useStaticAssets(join(__dirname, '..', 'uploads'));
