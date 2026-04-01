@@ -15,9 +15,29 @@ async function bootstrap() {
   // // app.use(bodyParser.json())
   // await app.listen(3000);
 
+  const allowedOrigins = new Set(
+    [
+      'https://care-connect-rouge.vercel.app',
+      'https://careconnect-virid.vercel.app',
+      'http://localhost:3000',
+      'http://localhost:5173',
+      'http://localhost:4200',
+      ...(process.env.FRONTEND_URLS?.split(',') ?? []),
+    ]
+      .map((origin) => origin.trim())
+      .filter(Boolean),
+  );
+
   app.enableCors({
-    origin: true, // allow all origins (quick fix)
-    credentials: true, // if using cookies or authorization headers
+    origin: (origin, callback) => {
+      // Allow non-browser and same-origin requests that do not send Origin.
+      if (!origin || allowedOrigins.has(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`CORS blocked for origin: ${origin}`), false);
+    },
+    credentials: true,
   });
   // app.useStaticAssets(join(__dirname, '..', 'uploads'));
   // Serve static files from the 'uploads' directory
