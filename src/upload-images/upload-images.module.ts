@@ -8,9 +8,8 @@ import { join } from 'path';
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
-      serveRoot: '/uploads',
+      serveRoot: '/uploads/',
     }),
-    ,
   ],
   controllers: [UploadImagesController],
   providers: [UploadImagesService],
